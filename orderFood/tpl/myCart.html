@@ -1,0 +1,57 @@
+<ion-header-bar align-title="center">
+  <h1 class="title">我要订餐</h1>
+  <button
+      ng-click="toggleEditStatus()"
+      class="button
+  button-clear button-dark">
+    {{editMsg}}
+  </button>
+</ion-header-bar>
+
+<ion-content ng-show="!isCartEmpty">
+  <h2 class="text-center">我的购物车</h2>
+
+  <div class="list list-inset">
+    <div class="item"
+         ng-repeat="dish in cartList">
+      <div class="row row-center">
+        <div class="col col-25">
+          <img class="img-responsive"
+               ng-src="img/{{dish.img_sm}}" alt=""/>
+        </div>
+        <div class="col" ng-show="editEnable">
+          <h3>{{dish.name}}</h3>
+
+          <p>{{dish.price+"×"+dish.dishCount}}</p>
+        </div>
+        <div class="col" ng-hide="editEnable">
+          <button ng-click="deleteFromCart($index)">-</button>
+          <span>{{dish.dishCount}}</span>
+          <button ng-click="addToCart($index)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="item text-right">
+
+      <span>合计：{{calcSum()}}</span>
+      <button
+          ng-click="jumpToOrder()"
+          class="button button-balanced">
+        立即下单
+      </button>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content ng-show="isCartEmpty">
+  <div class="card" >
+    <div class="item">
+      <button
+          ui-sref="kflMain"
+          class="button button-balanced button-block">买买买</button>
+    </div>
+  </div>
+</ion-content>
+
+
+<div ng-include="'tpl/include/footer.html'"></div>
